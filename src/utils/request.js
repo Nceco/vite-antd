@@ -9,7 +9,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+    const loginInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
     config.headers["Authorization"] = loginInfo ? loginInfo.token : "";
     return config;
   },

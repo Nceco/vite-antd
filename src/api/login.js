@@ -7,3 +7,10 @@ export function login(data) {
     data,
   });
 }
+
+export function captcha() {
+  return request({
+    url: "/captcha",
+    method: "get",
+  });
+}
