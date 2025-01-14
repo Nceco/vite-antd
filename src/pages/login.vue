@@ -48,7 +48,7 @@
         </div>
       </a-form>
       <div>
-        <a-button type="primary" html-type="submit" @click="onFinish">{{ t('common.login') }}</a-button>
+        <a-button type="primary" html-type="submit" @click="onFinish" size="large">{{ t('common.login') }}</a-button>
       </div>
     </div>
   </div>
@@ -112,8 +112,8 @@ const onFinish = async (values) => {
   background-color: #0818336d;
   .form_box{
     background-color: white;
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 400px;
     box-shadow: 0 0.143rem 0.571rem 0 rgba(31, 40, 51, 0.05);
     border-radius: 6px;
     display: flex;
