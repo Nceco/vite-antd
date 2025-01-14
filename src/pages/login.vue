@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <switch-language/>
     <div class="form_box">
       <a-form
       size="large"
@@ -13,7 +14,7 @@
           name="name"
           :rules="[{ required: true, message: 'Please input your name!' }]"
         >
-          <a-input v-model:value="formState.name" placeholder="请输入用户名">
+          <a-input v-model:value="formState.name" :placeholder="t('placeholder.username')">
             <template #prefix>
               <user-outlined />
             </template>
@@ -24,7 +25,7 @@
           name="password"
           :rules="[{ required: true, message: 'Please input your password!' }]"
         >
-          <a-input-password v-model:value="formState.password"  placeholder="请输入密码">
+          <a-input-password v-model:value="formState.password"  :placeholder="t('placeholder.password')">
             <template #prefix>
               <lock-outlined />
             </template>
@@ -36,27 +37,31 @@
             name="captcha"
             :rules="[{ required: true, message: 'Please input your captcha!' }]"
           >
-            <a-input v-model:value="formState.captcha"  placeholder="请输入验证码">
+            <a-input v-model:value="formState.captcha"  :placeholder="t('placeholder.captcha')">
               <template #prefix>
                 <safety-outlined />
               </template>
             </a-input>
           </a-form-item>
           <div v-if="captchaImg" class="captcha_img" @click="refreshCaptcha" v-html="captchaImg"></div>
-          <img v-else class="no_img" src="" alt="验证码"/>
+          <img v-else class="no_img" src="" :alt="t('common.captcha')"/>
         </div>
       </a-form>
       <div>
-        <a-button type="primary" html-type="submit" @click="onFinish">登录</a-button>
+        <a-button type="primary" html-type="submit" @click="onFinish">{{ t('common.login') }}</a-button>
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import { reactive,onMounted,ref } from 'vue';
-import {message} from 'ant-design-vue'
+import { message } from 'ant-design-vue'
+import SwitchLanguage from '@/components/SwitchLanguage.vue'
 import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons-vue';
-import {login,captcha} from '@/api/login'
+import { login,captcha } from '@/api/login'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const formState = reactive({
   name: '',
@@ -87,7 +92,7 @@ const onFinish = async (values) => {
     const res = await login(values);
     if(res.code === 200){
       localStorage.setItem('loginInfo',JSON.stringify(res.data || {}));
-      message.success('登录成功');
+      message.success(t('common.loginSuccess'));
     }else if(res.code === 300){
       message.error(res.message);
     }
