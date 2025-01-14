@@ -31,7 +31,8 @@ export const request = (config) => {
       .catch((err) => {
         if (err.status === 401) {
           message.error("登录过期，请重新登录");
-          return;
+        } else {
+          message.error(err.message);
         }
         reject(err);
       });
